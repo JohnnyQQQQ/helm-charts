@@ -27,7 +27,9 @@ spec:
                   - ingress-nginx
               topologyKey: kubernetes.io/hostname
       hostNetwork: true
+{{- if .Values.rbac }}
       serviceAccount: kube-keepalived-vip
+{{- end -}}
       containers:
       - image: quay.io/cornelius/keepalived-vip:0.11_notify
         name: kube-keepalived-vip
