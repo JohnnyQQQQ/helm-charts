@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vip-notify
+data:
+  notify.sh: |
+    #!/bin/bash
+    ENDSTATE=$3
+    NAME=$2
+    TYPE=$1
+    if [ "$ENDSTATE" == "MASTER" ] ; then
+        HOST_IP=$(ip route get 8.8.8.8 | awk '{print $7 }')
+        echo "setting Failover IP:  $FAILOVER_IP to Server IP:  $HOST_IP"
+
+        export SERVER_ID=$(curl -H "Authorization: Bearer YOURTOKEN" "https://api.hetzner.cloud/v1/servers?name=$HOSTNAME" | jq '.servers[0].id')
+        export FLOATING_IP_ID=$(curl -H "Authorization: Bearer YOURTOKEN" "https://api.hetzner.cloud/v1/floating_ips" | jq '.floating_ips[] | select(.description=="keepalived")' | jq '.id')
+        export FLOATING_IP=$(curl -H "Authorization: Bearer YOURTOKEN" "https://api.hetzner.cloud/v1/floating_ips" | jq '.floating_ips[] | select(.description=="keepalived")' | jq -r '.ip')
+        curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer YOURTOKEN" -d "{\"server\":$SERVER_ID}" "https://api.hetzner.cloud/v1/floating_ips/$FLOATING_IP_ID/actions/assign" # added by exocode
+        curl -k -u "$HETZNER_USER:$HETZNER_PASS" https://robot-ws.your-server.de/failover/$FAILOVER_IP -d active_server_ip=$HOST_IP
+
+    fi
