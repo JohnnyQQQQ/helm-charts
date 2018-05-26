@@ -1,4 +1,5 @@
 {{- if .Values.rbac }}
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
