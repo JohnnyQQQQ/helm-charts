@@ -52,10 +52,15 @@ spec:
               secretKeyRef:
                 key: hetzner-pass
                 name: hetzner-secret-failoverip-1
-          - name: FAILOVER_IP
+          - name: HETZNER_TOKEN
             valueFrom:
               secretKeyRef:
-                key: failover-ip
+                key: hetzner-token
+                name: hetzner-secret-failoverip-1
+          - name: FLOATING_IP
+            valueFrom:
+              secretKeyRef:
+                key: floating-ip
                 name: hetzner-secret-failoverip-1
 
           - name: POD_NAME
