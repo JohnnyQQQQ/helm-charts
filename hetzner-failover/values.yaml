@@ -3,9 +3,7 @@
 # Declare variables to be passed into your templates.
 rbac: true
 failoverip1: place-your-failover-ip-here
-hetzneruser: place-your-email-here
 hetznertoken: place-your-token-here
-hetznerpass: place-your-password-here
 namespace: default
 target: nginx
 replicaCount: 1
