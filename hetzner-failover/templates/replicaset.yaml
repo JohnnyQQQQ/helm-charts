@@ -42,16 +42,6 @@ spec:
           name: notify
         # use downward API
         env:
-          - name: HETZNER_USER
-            valueFrom:
-              secretKeyRef:
-                key: hetzner-user
-                name: hetzner-secret-failoverip-1
-          - name: HETZNER_PASS
-            valueFrom:
-              secretKeyRef:
-                key: hetzner-pass
-                name: hetzner-secret-failoverip-1
           - name: HETZNER_TOKEN
             valueFrom:
               secretKeyRef:
