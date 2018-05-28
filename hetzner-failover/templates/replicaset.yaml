@@ -24,7 +24,7 @@ spec:
                 - key: app
                   operator: In
                   values:
-                  - ingress-nginx
+                  - nginx-demo
               topologyKey: kubernetes.io/hostname
       hostNetwork: true
       serviceAccount: kube-keepalived-vip
